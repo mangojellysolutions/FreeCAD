@@ -1,5 +1,6 @@
 from PIL import Image
 import os
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 '''Try to use as smaller image as you can'''
 img = Image.open(dir_path+"/images/smallmap.png", "r")
@@ -14,14 +15,14 @@ print("pixel size. width: "+str(imgWidth)+", height: "+str(imgHeight))
 lst = list(img.getdata())
 print("lst length: "+str(len(lst)))
 #Shape params
-'''we will plot a shape ever x pixels as long as that pixel is populated with the colour. Best to use black and white'''
+'''we will plot a shape ever x pixels as long as that pixel is populated with the colour of the sea '''
 pixelSpacing = 2
 holeSize = 2
 positionX = 0
 positionY = 0
 colourToIgnore = (0)
 
-for y in range(0, imgHeight, pixelSpacing):holeSize
+for y in range(0, imgHeight, pixelSpacing):
   positionY = pixelSpacing * y
   for x in range(0, imgWidth, pixelSpacing):
     positionX = pixelSpacing * x
