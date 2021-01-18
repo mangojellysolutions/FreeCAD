@@ -3,7 +3,7 @@ import os
 from PySide import QtGui
 dir_path = os.path.dirname(os.path.realpath(__file__))
 '''Try to use as smaller image as you can'''
-img = Image.open(dir_path+"/images/star.png", "r")
+img = Image.open(dir_path+"/images/smallmap.png", "r")
 pix = img.load()
 
 ##get height and width
@@ -28,9 +28,11 @@ print("Defining colour to ignore from pixel at x:0, y:0 which has a channel stru
 if ((type(lst[0]) is int) == False):
   for i in lst[0]:
     colourToIgnore = colourToIgnore + (0,)
+else:
+  colourToIgnore = 0
 print("colour to ignore "+str(colourToIgnore))
 
-##start tepping through the image
+##start stepping through the image
 for y in range(0, imgHeight, pixelSpacing):
   positionY = pixelSpacing * y
   for x in range(0, imgWidth, pixelSpacing):
