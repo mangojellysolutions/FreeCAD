@@ -1,0 +1,4 @@
+lst = [(10,4),(20,2),(30,10),(40,10)]
+for coord in lst:
+	App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(coord[0],coord[1],0),App.Vector(0,0,1),2.162281),False)
+App.activeDocument().recompute()

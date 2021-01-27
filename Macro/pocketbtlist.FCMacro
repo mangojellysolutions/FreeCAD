@@ -1,0 +1,6 @@
+lst=((-12,0),(-6,0), (0,0), (6,0), (12,0))
+for coord in lst:
+#(4,5)
+	print(coord)
+	App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(coord[0],coord[1]),App.Vector(0,0,1),2.811259),False)
+App.activeDocument().recompute()

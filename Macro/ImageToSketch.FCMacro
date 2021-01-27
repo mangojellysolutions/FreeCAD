@@ -2,6 +2,16 @@ from PIL import Image
 import os
 from PySide import QtGui
 dir_path = os.path.dirname(os.path.realpath(__file__))
+
+#Find the image
+#Load the image
+
+#imageWidth
+#imageHeight
+
+#colour to ignore
+#what format is it in?
+#explain with a black and white and a blue and white image
 '''Try to use as smaller image as you can'''
 img = Image.open(dir_path+"/images/smallmap.png", "r")
 pix = img.load()

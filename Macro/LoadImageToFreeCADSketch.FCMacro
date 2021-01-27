@@ -1,0 +1,21 @@
+from PIL import Image
+from PySide import QtGui
+imageLocation = "/home/oranges/dev/FreeCAD/Macro/images/c64.jpg"
+img = Image.open(imageLocation)
+imgWidth = img.size[0]
+imgHeight = img.size[1]
+img.load()
+lst = img.getdata()
+ignoreColour = lst[0]
+pixelSpacing = 4
+radiusOfCircle = 0.5
+for y in range(0, imgHeight, pixelSpacing):
+	print("Processing y: "+str(y))
+	for x in range(0, imgWidth, pixelSpacing):
+		pixelIdx = x + (imgWidth * y)
+		px = lst[pixelIdx]
+		if (px != ignoreColour):
+			App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(x,y,0),App.Vector(0,0,1),radiusOfCircle),False)
+			App.ActiveDocument.recompute()
+			QtGui.QApplication.processEvents()
+print("complete")
