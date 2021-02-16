@@ -1,5 +1,0 @@
-from PySide import QtGui
-for x in range(0,300):
-	FreeCAD.getDocument("MechanicalMovementSkeletons").getObject("InvoluteGear001").Placement = App.Placement(App.Vector(-26,0,0),App.Rotation(App.Vector(0,0,1),x))
-	App.activeDocument().recompute()	
-	QtGui.QApplication.processEvents()
