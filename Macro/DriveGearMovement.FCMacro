@@ -1,0 +1,2 @@
+FreeCAD.getDocument("Unnamed").getObject("InvoluteGear").Placement.Rotation.Angle += 0.2
+App.activeDocument().recompute()

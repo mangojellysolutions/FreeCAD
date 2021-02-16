@@ -1,0 +1,3 @@
+###Video: FreeCAD: Linking and animating a set of gears by turning / adjusting drive gear angle with formula
+FreeCAD.getDocument("Unnamed").getObject("InvoluteGear").Placement.Rotation.Angle += 0.1
+App.activeDocument().recompute()

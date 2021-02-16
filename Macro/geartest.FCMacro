@@ -1,0 +1,5 @@
+from PySide import QtGui
+for x in range(0, 350):
+	App.ActiveDocument.InvoluteGear.Placement.Rotation.Angle = App.ActiveDocument.InvoluteGear.Placement.Rotation.Angle + 0.02
+	App.activeDocument().recompute()
+	QtGui.QApplication.processEvents()
