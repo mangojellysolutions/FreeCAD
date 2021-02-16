@@ -1,0 +1,29 @@
+#https://www.tutorialspoint.com/pyqt/pyqt_qslider_widget_signal.htm
+from PySide.QtGui import *
+from PySide.QtCore import *
+class MyWindow(QWidget):
+	def __init__(self):
+		super(MyWindow,self).__init__()
+		radsInCircle = 6.283
+		self.setWindowTitle("test")
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.slider1 = QSlider(Qt.Horizontal)
+		self.slider1.setMinimum(0)
+		self.slider1.setMaximum(radsInCircle * 1000)
+		self.slider1.setSingleStep(10)
+		self.slider1.setValue(radsInCircle * 1000 / 2)
+		self.slider1.setTickInterval(500)
+		self.slider1.setTickPosition(QSlider.TicksBothSides)
+		self.slider1.valueChanged.connect(self.sliderMoved)
+		layout = QVBoxLayout()
+		layout.addWidget(self.slider1)
+		self.setLayout(layout)
+		self.show()
+		App.ActiveDocument.getObject("Box").Placement.Rotation.Angle = self.slider1.value() / 1000
+
+	def sliderMoved(self):
+		val = self.slider1.value()
+		App.ActiveDocument.getObject("Box").Placement.Rotation.Angle = val / 1000
+		App.Console.PrintMessage(str(val/1000)+"\n")
+
+myWindow = MyWindow()

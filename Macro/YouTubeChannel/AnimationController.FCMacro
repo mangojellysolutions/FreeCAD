@@ -1,0 +1,44 @@
+from PySide import QtGui, QtCore
+
+class MyGui(QtGui.QWidget):
+	def __init__(self):
+		super(MyGui, self).__init__()
+		#Window
+		self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+		self.setWindowTitle("Animation GUI")	
+		self.resize(200,100)
+		self.show()
+
+		#Buttons
+		self.bt_start = QtGui.QPushButton("Start",self)
+		self.bt_stop = QtGui.QPushButton("Stop",self)
+		QtCore.QObject.connect(self.bt_start, QtCore.SIGNAL("pressed()"), self.bt_start_click)
+		QtCore.QObject.connect(self.bt_stop, QtCore.SIGNAL("pressed()"), self.bt_stop_click)
+
+		#Layout
+		layout = QtGui.QGridLayout()
+		layout.addWidget(self.bt_start, 0,0)
+		layout.addWidget(self.bt_stop, 0,1)
+		self.setLayout(layout)
+
+		self.timer = QtCore.QTimer()
+		self.timer.timeout.connect(self.timer_tick)
+		
+	def timer_tick(self):
+		App.ActiveDocument.getObject("Box").Placement.Rotation.Angle += 0.1
+		App.Console.PrintMessage("Timer ticked ")
+
+	def bt_start_click(self):
+		App.Console.PrintMessage("button start click\n")
+		self.timer.start(1)
+
+	def bt_stop_click(self):
+		App.Console.PrintMessage("button stop click\n")
+		self.timer.stop()
+
+	def closeEvent(self, event):
+		self.timer.stop()
+		App.Console.PrintMessage("closing")
+		
+
+gui = MyGui()

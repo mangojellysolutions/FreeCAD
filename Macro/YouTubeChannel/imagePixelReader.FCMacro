@@ -1,0 +1,51 @@
+'''
+2D / 1D - mapping is pretty simple. Given x and y, and 2D array sizes width (for x-direction) and height (for y-direction), you can calculate the according index i in 1D space (zero-based) by
+
+i = x + width*y;
+and the reverse operation is
+
+x = i % width;    // % is the "modulo operator", the remainder of i / width;
+y = i / width;    // where "/" is an integer division
+You can extend this easily to 3 or more dimensions. For example, for a 3D matrix with dimensions "width", "height" and "depth":
+
+i = x + width*y + width*height*z;
+and reverse:
+
+x = i % width;
+y = (i / width)%height;
+z = i / (width*height);
+'''
+from PIL import Image
+'''use a small image '''
+img = Image.open("/home/oranges/dev/FreeCAD/ImageToSketch/images/smallmap.png", "r")
+pix = img.load()
+
+##get height and width
+imgWidth = img.size[0]
+imgHeight = img.size[1]
+print("pixel size. width: "+str(imgWidth)+", height: "+str(imgHeight))
+
+#Get a list of tuples, a tuple shows the pixel data for 1 pixel moving from left to righ as we descend
+lst = list(img.getdata())
+print("lst length: "+str(len(lst)))
+#Shape params
+'''we will plot a shape ever x pixels as long as that pixel is populated with the colour of the sea '''
+shapePixelSize = 1
+spacing = 1
+positionX = 0
+positionY = 0
+
+shapeAndSpacingSize = shapePixelSize + spacing
+
+for y in range(0, imgHeight):
+  positionY = shapeAndSpacingSize * y
+  for x in range(0, imgWidth):
+    positionX = shapeAndSpacingSize * x
+    pixelIdx = x + imgWidth * y
+    if ((x % shapeAndSpacingSize == 1) & (y % shapeAndSpacingSize == 1)):
+      if (lst[pixelIdx] == (0)):
+        continue
+      print ("x: "+str(x)+", y: "+str(y)+", pixel tuple["+str(pixelIdx)+"]: "+str(lst[pixelIdx]))
+      App.ActiveDocument.Sketch.addGeometry(Part.Circle(App.Vector(positionX,positionY,0),App.Vector(0,0,1),shapePixelSize),False)
+  QtGui.QApplication.processEvents()
+App.activeDocument().recompute()
