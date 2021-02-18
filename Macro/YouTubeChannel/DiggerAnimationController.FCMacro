@@ -1,0 +1,50 @@
+#https://www.tutorialspoint.com/pyqt/pyqt_qslider_widget_signal.htm
+from PySide.QtGui import *
+from PySide.QtCore import *
+import a2p_solversystem as a2p_solver
+
+class MyWindow(QWidget):
+	def __init__(self):
+		super(MyWindow,self).__init__()
+		radsInCircle = 6.283
+		self.setWindowTitle("Animation Control")
+		self.setWindowFlags(Qt.WindowStaysOnTopHint)
+		self.sldBoom = QSlider(Qt.Horizontal)
+		self.sldBoom.setMinimum(-radsInCircle * 1000)
+		self.sldBoom.setMaximum(radsInCircle * 1000)
+		self.sldBoom.setValue(0)
+		self.sldBoom.valueChanged.connect(self.sldBoomMoved)
+		self.sldForeArm = QSlider(Qt.Horizontal)
+		self.sldForeArm.setMinimum(-radsInCircle * 1000)
+		self.sldForeArm.setMaximum(radsInCircle * 1000)
+		self.sldForeArm.setValue(0)
+		self.sldForeArm.valueChanged.connect(self.sldForeArmMoved)
+		self.sldBucket = QSlider(Qt.Horizontal)
+		self.sldBucket.setMinimum(-radsInCircle * 1000)
+		self.sldBucket.setMaximum(radsInCircle * 1000)
+		self.sldBucket.setValue(0)
+		self.sldBucket.valueChanged.connect(self.sldBucketMoved)
+		layout = QVBoxLayout()
+		layout.addWidget(self.sldBoom)
+		layout.addWidget(self.sldForeArm)
+		layout.addWidget(self.sldBucket)
+		self.setLayout(layout)
+		self.show()
+		
+
+	def sldBoomMoved(self):
+		val = self.sldBoom.value()
+		App.ActiveDocument.getObject("b_CadDiggerArm1_001_").Placement.Rotation.Angle = val / 1000
+		a2p_solver.solveConstraints(FreeCAD.activeDocument(), useTransaction=True)
+
+	def sldForeArmMoved(self):
+		val = self.sldForeArm.value()
+		App.ActiveDocument.getObject("b_CadDiggerArm1_001_001").Placement.Rotation.Angle = val / 1000
+		a2p_solver.solveConstraints(FreeCAD.activeDocument(), useTransaction=True)
+
+	def sldBucketMoved(self):
+		val = self.sldBucket.value()
+		App.ActiveDocument.getObject("b_CadDiggerArm1_001_002").Placement.Rotation.Angle = val / 1000
+		a2p_solver.solveConstraints(FreeCAD.activeDocument(), useTransaction=True)
+
+myWindow = MyWindow()
