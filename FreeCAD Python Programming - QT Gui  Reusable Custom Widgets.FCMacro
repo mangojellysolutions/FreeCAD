@@ -1,0 +1,37 @@
+from PySide.QtGui import QWidget, QLabel, QHBoxLayout, QVBoxLayout, QPushButton, QListWidget, QListWidgetItem
+
+class CustomWidget(QWidget):
+	def __init__(self):
+		super(CustomWidget, self).__init__()
+		label = QLabel("custom label text")
+		button = QPushButton("Custom Push Me!")
+		layout = QHBoxLayout()
+		layout.addWidget(label)
+		layout.addWidget(button)
+		self.setLayout(layout)
+
+class MyWindow(QWidget):
+	def __init__(self):
+		super(MyWindow, self).__init__()
+		list = QListWidget()
+		
+		listItem = QListWidgetItem(list)
+		listItemWidget = CustomWidget()
+		listItem.setSizeHint(listItemWidget.sizeHint())
+		list.addItem(listItem)
+		list.setItemWidget(listItem, listItemWidget)
+
+		listItem2 = QListWidgetItem(list)
+		listItemWidget2 = CustomWidget()
+		listItem2.setSizeHint(listItemWidget.sizeHint())
+		list.addItem(listItem2)
+		list.setItemWidget(listItem2, listItemWidget2)
+
+		customWidget1 = CustomWidget()
+		layout = QVBoxLayout()
+		layout.addWidget(customWidget1)
+		layout.addWidget(list)
+		self.setLayout(layout)
+		self.show()
+
+myWin = MyWindow()
